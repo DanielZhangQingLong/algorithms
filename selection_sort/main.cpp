@@ -2,7 +2,8 @@
 
 using namespace std;
 
-void selectionSort( int arr[], int n) {
+template<typename T>
+void selectionSort( T arr[], int n) {
     for (int i = 0; i < n; i ++) {
         // Find out min in [i, n)
         int minIndex = i;
@@ -17,9 +18,14 @@ void selectionSort( int arr[], int n) {
 int main() {
     int a[10] = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
     selectionSort(a, 10);
-//    std::cout << "Hello, World!" << std::endl;
     for(int i = 0; i < 10; i ++)
         cout<< a[i] <<" ";
+    cout<<endl;
+
+    float b[10] = {1.0, 9.3, 8.3, 1.7, 6.3, 5.4, 3.4, 3.9, 20, 13.3};
+    selectionSort(b, 10);
+    for(int i = 0; i < 10; i ++)
+        cout<< b[i] <<" ";
     cout<<endl;
     return 0;
 }
