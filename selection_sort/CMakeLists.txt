@@ -3,4 +3,4 @@ project(selection_sort)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(selection_sort main.cpp)
+add_executable(selection_sort main.cpp Student.h)
