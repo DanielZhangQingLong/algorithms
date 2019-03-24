@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include "SortTestHelper.h"
 
 
@@ -43,13 +44,28 @@ void __mergeSort(T arr[], int l, int r) {
     int mid = (l + r) / 2;
     __mergeSort(arr, l, mid);
     __mergeSort(arr, mid+1, r);
-    __merge(arr, l, mid, r);
+    //如果左边的元素大于右边才需要合并
+    if(arr[mid] > arr[mid+1])
+        __merge(arr, l, mid, r);
 }
 
 template<typename T>
 void mergeSort(T arr[], int n) {
 
     __mergeSort(arr, 0, n - 1);
+}
+
+// 第二种非递归实现方法，自底向上。
+template <typename T>
+void mergeSortBU(T arr[], int n) {
+
+    // 对[0...sz-1], [sz...2sz-1]归并
+    for(int sz = 1; sz <= n; sz += sz) {
+        // [2sz...3sz-1], [3sz...4sz-1]
+        for(int i = 0; i + sz < n; i += sz + sz) {
+            __merge(arr, i, i + sz - 1, min(i + sz + sz - 1, n - 1));
+        }
+    }
 }
 
 template <typename T>
@@ -78,5 +94,14 @@ int main() {
 
     delete[] arr1;
     delete[] arr2;
+    cout<<endl;
+
+    int swapTimes = 0;
+
+    cout << "Test for Random Array, size = "<<n<<", swap times [0, "<<swapTimes<<"]"<<endl;
+    arr1 = SortTestHelper::generateNearlyOrderedArray(n, swapTimes);
+    arr2 = SortTestHelper::copyIntArray(arr1, n);
+    SortTestHelper::testSort("Insertion Sort", insertionSort, arr1, n);
+    SortTestHelper::testSort("Merge Sort", mergeSort, arr2, n);
     return 0;
 }
