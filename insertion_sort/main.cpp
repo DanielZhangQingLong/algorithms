@@ -7,9 +7,14 @@ using namespace std;
 template <typename T>
 void insertionSort(T arr[], int n) {
     for (int i = 1; i < n; i ++) {
-        for (int j = i; j > 0 && arr[j] < arr[j-1]; j --) {
-            swap(arr[j], arr[j - 1]);
+        // Insert arr[i] in right position.
+        T e = arr[i];
+        int j;
+        for (j = i; j > 0 && arr[j-1] > e; j --) {
+//            swap(arr[j], arr[j-1]);
+            arr[j] = arr[j-1];
         }
+        arr[j] = e;
     }
 }
 
@@ -28,7 +33,7 @@ void selectionSort( T arr[], int n) {
 
 int main() {
     int n = 10000;
-    int *arr = SortTestHelper::genenrateRandomArray(n, 0, n);
+    int *arr = SortTestHelper::generateNearlyOrderedArray(n, 10);
     int *arr2 = SortTestHelper::copyIntArray(arr, n);
     SortTestHelper::testSort("Insertion Sort", insertionSort, arr, n);
     SortTestHelper::testSort("Selection Sort", selectionSort, arr2, n);
